@@ -9,6 +9,7 @@ parameters:
   force:
     description: 'Force overwriting scratch org and deploy even if warnings are present.'
     type: boolean
+    default: false
 
 steps:
   - run:

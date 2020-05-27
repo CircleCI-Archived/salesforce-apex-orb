@@ -1,6 +1,6 @@
 description: >
   An opinionated automation job for deploying your salesforce application to a scratch organization, executing apex unit testing, and finally removing the scratch org. Check this job's source for the full list of commands ran.
-executor: default
+executor: sfdx-cli/default
 parameters:
   cli-version:
     description: 'By default, the latest version of the standalone CLI will be installed. To install via npm, supply a version tag such as "latest" or "6".'
