@@ -3,7 +3,7 @@ version: 2.1
 # add your orb below, to be used in integration tests (note: a @dev:alpha
 # release must exist.);
 orbs:
-  apex: circleci-public/salesforce-apex@<<pipeline.parameters.dev-orb-version>>
+  apex: circleci/salesforce-apex@<<pipeline.parameters.dev-orb-version>>
   orb-tools: circleci/orb-tools@9.0
 
 # Pipeline parameters
@@ -49,7 +49,7 @@ workflows:
       # store CIRCLE_TOKEN as a project env var or Contexts resource
       # if using Contexts, add your context below
       - orb-tools/publish-dev:
-          orb-name: circleci-public/salesforce-apex
+          orb-name: circleci/salesforce-apex
           requires:
             - orb-tools/pack
 
@@ -81,7 +81,7 @@ workflows:
       # be skipped.
       # e.g. [semver:patch] will cause a patch version to be published.
       - orb-tools/dev-promote-prod-from-commit-subject:
-          orb-name: circleci-public/salesforce-apex
+          orb-name: circleci/salesforce-apex
 
           add-pr-comment: false
           fail-if-semver-not-indicated: false
