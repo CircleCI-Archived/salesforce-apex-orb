@@ -1,0 +1,17 @@
+description: >
+  Simple example showing how to install the CLI, authenticate and test against a scratch org.
+usage:
+  version: 2.1
+  orbs:
+    apex: circleci/salesforce-apex@x.y
+
+  workflows:
+    basic-test:
+      jobs:
+        - apex/scratch-deploy-and-test:
+            scratch-alias: "circleci"
+            scratch-def: "./config/project-scratch-def.json"
+            permset: "circleci"
+            sampledata-path: "./sampledata"
+            deploydir: "./src"
+            defaultusername: "circleci"

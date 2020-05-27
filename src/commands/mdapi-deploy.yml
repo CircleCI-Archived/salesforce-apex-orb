@@ -1,0 +1,28 @@
+# Deploy MDAPI data.
+description: >
+  'Deploy MDAPI data.'
+parameters:
+  scratch-alias:
+    description: 'The alias of the scratch Org.'
+    type: string
+    default: ''
+  deploy-dir:
+    description: 'Deploy directory containing metadata.'
+    type: string
+    default: ''
+  deploy-zip:
+    description: 'Deploy zip file containing metadata.'
+    type: string
+    default: ''
+  checkonly:
+    description: "Validate deploy, but don't save to org."
+    type: boolean
+    default: false
+
+steps:
+  - run:
+      name: Deploy Community metadata
+      command: sfdx force:mdapi:deploy <<#parameters.scratch-alias>> -u <<parameters.scratch-alias>> <</parameters.scratch-alias>>
+        <<#parameters.deploy-dir>> --deploydir <<parameters.deploy-dir>> <</parameters.deploy-dir>>
+        <<#parameters.deploy-zip>> --zipfile <<parameters.deploy-zip>> <</parameters.deploy-zip>>
+        <<#parameters.checkonly>> --checkonly <</parameters.checkonly>>

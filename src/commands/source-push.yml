@@ -1,0 +1,18 @@
+# Push source to scratch org.
+description: >
+  'Push application source to a scratch org.'
+parameters:
+  scratch-alias:
+    description: 'The name of the scratch Org, can either be the alias or target username.'
+    default: ''
+    type: string
+  force:
+    description: 'Force overwriting scratch org and deploy even if warnings are present.'
+    type: boolean
+
+steps:
+  - run:
+      name: Push App To Scratch Org
+      command: sfdx force:source:push 
+        <<# parameters.scratch-alias >> -u << parameters.scratch-alias >> 
+        <</ parameters.scratch-alias >> <<# parameters.force >> --forceoverwrite --ignorewarnings <</ parameters.force >>

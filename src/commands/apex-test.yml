@@ -1,0 +1,18 @@
+# Test an APEX application.
+description: >
+  'Run tests for an APEX application.'
+parameters:
+  scratch-alias:
+    description: 'The alias of the scratch Org.'
+    type: string
+    default: ''
+  result-format:
+    description: 'Format results should be returned as - defaults to junit, can be one of human, tap, junit or json.'
+    type: string
+    default: 'junit'
+
+steps:
+  - run:
+      name: Run Unit Tests
+      command: sfdx force:apex:test:run --wait 10 --resultformat << parameters.result-format >> --codecoverage --testlevel RunLocalTests
+        <<# parameters.scratch-alias >> -u << parameters.scratch-alias >> <</ parameters.scratch-alias >>
