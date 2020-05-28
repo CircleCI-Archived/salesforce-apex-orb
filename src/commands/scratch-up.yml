@@ -1,0 +1,22 @@
+# Create and open a scratch org.
+description: >
+  'Create and open a scratch org.'
+parameters:
+  scratch-config:
+    description: 'The scratch JSON definition.'
+    type: string
+  scratch-alias:
+    description: 'The alias of the scratch Org.'
+    type: string
+  overrides:
+    description: 'Overrides for scratch organization.'
+    type: string
+    default: ''
+
+steps:
+  - sfdx/scratch-create:
+      scratch-config: <<parameters.scratch-config>>
+      scratch-alias: <<parameters.scratch-alias>>
+      overrides: <<parameters.overrides>>
+  - sfdx/scratch-open:
+      scratch-alias: <<parameters.scratch-alias>>

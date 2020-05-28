@@ -1,0 +1,11 @@
+# Team down scratch org.
+description: >
+  'Tear down a scratch org.'
+parameters:
+  scratch-alias:
+    description: 'The alias of the scratch Org.'
+    type: string
+
+steps:
+  - sfdx/scratch-delete:
+      scratch-alias: <<parameters.scratch-alias>>
