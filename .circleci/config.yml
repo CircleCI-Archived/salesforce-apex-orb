@@ -32,6 +32,8 @@ jobs:
       - apex/scratch-up:
           scratch-config: "./config/project-scratch-def.json"
           scratch-alias: "ebikes"
+      - apex/source-push:
+          scratch-alias: "ebikes"
       - apex/test:
           scratch-alias: "ebikes"
       - apex/scratch-down:
