@@ -14,13 +14,15 @@ parameters:
 
 jobs:
   integration-test_setup:
-    executor: cimg/node:12.6
+    docker:
+     - image: cimg/node:12.6
     steps:
       - apex/setup:
           defaultusername: "gabriel@circleci.cpe"
 
   integration-test_full:
-    executor: cimg/node:12.6
+    docker:
+     - image: cimg/node:12.6
     steps:
       - run:
           name: Checkout Trailhead sample app
