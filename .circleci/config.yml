@@ -95,7 +95,8 @@ workflows:
           fail-if-semver-not-indicated: false
           publish-version-tag: false
           requires:
-            - integration-test-1
+            - integration-test_setup
+            - integration-test_full
           filters:
             branches:
               only: master
