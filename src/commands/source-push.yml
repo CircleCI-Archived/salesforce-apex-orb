@@ -10,6 +10,10 @@ parameters:
     description: 'Force overwriting scratch org and deploy even if warnings are present.'
     type: boolean
     default: false
+  permset:
+    description: 'Permissions set to assign to the user for the organization.'
+    type: string
+    default: ''
 
 steps:
   - run:
@@ -17,3 +21,9 @@ steps:
       command: sfdx force:source:push
         <<# parameters.scratch-alias >> -u << parameters.scratch-alias >>
         <</ parameters.scratch-alias >> <<# parameters.force >> --forceoverwrite --ignorewarnings <</ parameters.force >>
+  - when:
+      condition: << parameters.permset >>
+      steps:
+        - run:
+            name: Assign << parameters.permset >> permset for organization
+            command: sfdx force:user:permset:assign -n << parameters.permset >> -u <<parameters.scratch-alias>>

@@ -32,10 +32,10 @@ jobs:
       - apex/scratch-up:
           scratch-config: "./config/project-scratch-def.json"
           scratch-alias: "ebikes"
-          permset: "ebikes"
           sample-data: "./data/sample-data-plan.json"
       - apex/source-push:
           scratch-alias: "ebikes"
+          permset: "ebikes"
       - apex/test:
           scratch-alias: "ebikes"
       - apex/scratch-down:
