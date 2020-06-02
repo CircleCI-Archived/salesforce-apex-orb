@@ -12,6 +12,14 @@ parameters:
     description: 'Overrides for scratch organization.'
     type: string
     default: ''
+  permset:
+    description: 'Permissions set to assign to the user for the organization.'
+    type: string
+    default: ''
+  sample-data:
+    description: 'Path to sample data for the organization.'
+    type: string
+    default: ''
 
 steps:
   - sfdx/scratch-create:
@@ -20,3 +28,15 @@ steps:
       overrides: <<parameters.overrides>>
   - sfdx/scratch-open:
       scratch-alias: <<parameters.scratch-alias>>
+  - when:
+      condition: << parameters.permset >>
+      steps:
+        - run:
+            name: Assign << parameters.permset >> for organization
+            command: sfdx force:user:permset:assign -n << parameters.permset >>
+  - when:
+      condition: << parameters.sample-data >>
+      steps:
+        - run:
+            name: Import sample data plan from << parameters.sample-data >>
+            command: sfdx force:data:tree:import --plan << parameters.sample-data >>
