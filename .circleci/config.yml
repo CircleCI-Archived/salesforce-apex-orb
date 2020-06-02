@@ -32,9 +32,9 @@ jobs:
       - apex/scratch-up:
           scratch-config: "./config/project-scratch-def.json"
           scratch-alias: "ebikes"
-          sample-data: "./data/sample-data-plan.json"
       - apex/source-push:
           scratch-alias: "ebikes"
+          sample-data: "./data/sample-data-plan.json"
           permset: "ebikes"
       - apex/mdapi-deploy:
           scratch-alias: "ebikes"

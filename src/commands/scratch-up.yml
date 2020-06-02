@@ -12,10 +12,6 @@ parameters:
     description: 'Overrides for scratch organization.'
     type: string
     default: ''
-  sample-data:
-    description: 'Path to sample data for the organization.'
-    type: string
-    default: ''
 
 steps:
   - sfdx/scratch-create:
@@ -24,9 +20,3 @@ steps:
       overrides: <<parameters.overrides>>
   - sfdx/scratch-open:
       scratch-alias: <<parameters.scratch-alias>>
-  - when:
-      condition: << parameters.sample-data >>
-      steps:
-        - run:
-            name: Import sample data plan from << parameters.sample-data >>
-            command: sfdx force:data:tree:import --plan << parameters.sample-data >> -u <<parameters.scratch-alias>>
