@@ -36,6 +36,9 @@ jobs:
       - apex/source-push:
           scratch-alias: "ebikes"
           permset: "ebikes"
+      - apex/mdapi-deploy:  
+          scratch-alias: "ebikes"
+          deploy-dir: "./mdapiDeploy/unpackaged"
       - apex/test:
           scratch-alias: "ebikes"
       - apex/scratch-down:
