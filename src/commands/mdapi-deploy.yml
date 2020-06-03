@@ -20,7 +20,7 @@ parameters:
     default: false
   wait-time:
     description: "Amount of time to wait for this to complete."
-    type: string
+    type: integer
     default: 5
 
 steps:
