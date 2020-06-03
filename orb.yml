@@ -1,0 +1,272 @@
+commands:
+  mdapi-deploy:
+    description: |
+      'Deploy MDAPI data.'
+    parameters:
+      checkonly:
+        default: false
+        description: Validate deploy, but don't save to org.
+        type: boolean
+      deploy-dir:
+        default: ""
+        description: Deploy directory containing metadata.
+        type: string
+      deploy-zip:
+        default: ""
+        description: Deploy zip file containing metadata.
+        type: string
+      scratch-alias:
+        default: ""
+        description: The alias of the scratch Org.
+        type: string
+    steps:
+    - run:
+        command: sfdx force:mdapi:deploy <<#parameters.scratch-alias>> -u <<parameters.scratch-alias>>
+          <</parameters.scratch-alias>> <<#parameters.deploy-dir>> --deploydir <<parameters.deploy-dir>>
+          <</parameters.deploy-dir>> <<#parameters.deploy-zip>> --zipfile <<parameters.deploy-zip>>
+          <</parameters.deploy-zip>> <<#parameters.checkonly>> --checkonly <</parameters.checkonly>>
+        name: Deploy Community metadata
+  scratch-down:
+    description: |
+      'Tear down a scratch org.'
+    parameters:
+      scratch-alias:
+        description: The alias of the scratch Org.
+        type: string
+    steps:
+    - sfdx/scratch-delete:
+        scratch-alias: <<parameters.scratch-alias>>
+  scratch-up:
+    description: |
+      'Create and open a scratch org.'
+    parameters:
+      overrides:
+        default: ""
+        description: Overrides for scratch organization.
+        type: string
+      scratch-alias:
+        description: The alias of the scratch Org.
+        type: string
+      scratch-config:
+        description: The scratch JSON definition.
+        type: string
+    steps:
+    - sfdx/scratch-create:
+        overrides: <<parameters.overrides>>
+        scratch-alias: <<parameters.scratch-alias>>
+        scratch-config: <<parameters.scratch-config>>
+    - sfdx/scratch-open:
+        scratch-alias: <<parameters.scratch-alias>>
+  setup:
+    description: |
+      'Install CLI and autheticate with SFDC using CLI orb.'
+    parameters:
+      defaultusername:
+        description: Username for an organization that all commands will run against.
+        type: string
+      version:
+        default: ""
+        description: CLI version to install. Leave blank for latest.
+        type: string
+    steps:
+    - sfdx/install:
+        version: <<parameters.version>>
+    - sfdx/auth:
+        defaultusername: <<parameters.defaultusername>>
+  source-push:
+    description: |
+      'Push application source to a scratch org.'
+    parameters:
+      force:
+        default: false
+        description: Force overwriting scratch org and deploy even if warnings are
+          present.
+        type: boolean
+      permset:
+        default: ""
+        description: Permissions set to assign to the user for the organization.
+        type: string
+      sample-data:
+        default: ""
+        description: Path to sample data for the organization.
+        type: string
+      scratch-alias:
+        default: ""
+        description: The name of the scratch Org, can either be the alias or target
+          username.
+        type: string
+    steps:
+    - run:
+        command: sfdx force:source:push <<# parameters.scratch-alias >> -u << parameters.scratch-alias
+          >> <</ parameters.scratch-alias >> <<# parameters.force >> --forceoverwrite
+          --ignorewarnings <</ parameters.force >>
+        name: Push App To Scratch Org
+    - when:
+        condition: << parameters.permset >>
+        steps:
+        - run:
+            command: sfdx force:user:permset:assign -n << parameters.permset >> -u
+              <<parameters.scratch-alias>>
+            name: Assign << parameters.permset >> permset for organization
+    - when:
+        condition: << parameters.sample-data >>
+        steps:
+        - run:
+            command: sfdx force:data:tree:import --plan << parameters.sample-data
+              >> -u <<parameters.scratch-alias>>
+            name: Import sample data plan from << parameters.sample-data >>
+  test:
+    description: |
+      'Run tests for an APEX application.'
+    parameters:
+      result-format:
+        default: junit
+        description: Format results should be returned as - defaults to junit, can
+          be one of human, tap, junit or json.
+        type: string
+      scratch-alias:
+        default: ""
+        description: The alias of the scratch Org.
+        type: string
+    steps:
+    - run:
+        command: sfdx force:apex:test:run --wait 10 --resultformat << parameters.result-format
+          >> --codecoverage --testlevel RunLocalTests <<# parameters.scratch-alias
+          >> -u << parameters.scratch-alias >> <</ parameters.scratch-alias >>
+        name: Run Unit Tests
+description: |
+  Test and deploy APEX applications to Salesforce.
+display:
+  source_url: https://github.com/CircleCI-Public/salesforce-apex-orb/
+examples:
+  scratch-deploy-and-test:
+    description: |
+      Simple example showing how to install the CLI, authenticate and test against a scratch org.
+    usage:
+      orbs:
+        apex: circleci/salesforce-apex@x.y
+      version: 2.1
+      workflows:
+        deploy_test:
+          jobs:
+          - apex/scratch-deploy-and-test:
+              defaultusername: circleci
+              deploydir: ./src
+              permset: circleci
+              sampledata-path: ./sampledata
+              scratch-alias: circleci
+              scratch-def: ./config/project-scratch-def.json
+  setup-environment:
+    description: |
+      Example showing how to set up the CLI and authenticate with SFDC with the Apex Orb.
+    usage:
+      jobs:
+        install_autheticate:
+          docker:
+          - image: cimg/node:12.6
+          steps:
+          - apex/setup:
+              defaultusername: sample@email.com
+      orbs:
+        apex: circleci/salesforce-apex@x.y
+      version: 2.1
+      workflows:
+        basic_test:
+          jobs:
+          - install_authenticate
+executors: {}
+jobs:
+  scratch-deploy-and-test:
+    description: |
+      An opinionated automation job for deploying your salesforce application to a scratch organization, executing apex unit testing, and finally removing the scratch org. Check this job's source for the full list of commands ran.
+    executor: sfdx/default
+    parameters:
+      apiVersion:
+        default: ""
+        description: The API version for a specific project or all projects. Normally,
+          the Salesforce CLI assumes that you’re using the same version of the CLI
+          as the Dev Hub org.
+        type: string
+      cli-version:
+        default: ""
+        description: By default, the latest version of the standalone CLI will be
+          installed. To install via npm, supply a version tag such as "latest" or
+          "6".
+        type: string
+      consumerKey:
+        default: SFDX_CONSUMER_KEY
+        description: The consumner key of the connected app for salesforce. Stored
+          as an environment variable
+        type: env_var_name
+      defaultdevhubusername:
+        default: ${CIRCLE_PROJECT_REPONAME}-${CIRCLE_BRANCH}
+        description: The username of your Dev Hub org that the force:org:create command
+          defaults to. Used as alias.
+        type: string
+      defaultusername:
+        description: The username for an org that all commands run against by default.
+        type: string
+      deploydir:
+        description: The root of the directory tree that contains the files to deploy.
+          The root must contain a valid package.xml file describing the entities in
+          the directory structure.
+        type: string
+      instanceUrl:
+        default: ""
+        description: The URL of the Salesforce instance that is hosting your org.
+        type: string
+      jwtKey:
+        default: SFDX_JWT_KEY
+        description: Environment variable containing the base64 encoded private server
+          key.
+        type: env_var_name
+      permset:
+        description: 'Assign a pre-defined permission set to the default user. Learn
+          more: https://help.salesforce.com/articleView?id=perm_sets_create.htm&type=5'
+        type: string
+      sampledata-path:
+        description: 'Path location to sample data json file. Example: ./data/sample-data-plan.json'
+        type: string
+      scratch-alias:
+        description: Setting an alias each time you create a scratch org is a great
+          way to track the scratch org’s function. And it’s much easier to remember
+          when issuing subsequent CLI commands.
+        type: string
+      scratch-def:
+        description: Full path to scratch org definition json file. Example:'./config/project-scratch-def.json'
+        type: string
+    steps:
+    - checkout
+    - sfdx/install:
+        version: <<parameters.cli-version>>
+    - sfdx/auth:
+        apiVersion: <<parameters.apiVersion>>
+        consumerKey: <<parameters.consumerKey>>
+        defaultdevhubusername: <<parameters.defaultdevhubusername>>
+        defaultusername: <<parameters.defaultusername>>
+        instanceUrl: <<parameters.instanceUrl>>
+        jwtKey: <<parameters.jwtKey>>
+    - sfdx/scratch-create:
+        scratch-alias: <<parameters.scratch-alias>>
+        scratch-config: <<parameters.scratch-def>>
+    - source-push:
+        scratch-alias: <<parameters.scratch-alias>>
+    - run:
+        command: sfdx force:user:permset:assign -n <<parameters.permset>>
+        name: Assign Permissions
+    - run:
+        command: sfdx force:data:tree:import --plan <<parameters.sampledata-path>>
+        name: Load Sample Data
+    - mdapi-deploy:
+        deploy-dir: <<parameters.deploydir>>
+        scratch-alias: <<parameters.scratch-alias>>
+    - sfdx/scratch-open:
+        scratch-alias: <<parameters.scratch-alias>>
+    - test:
+        scratch-alias: <<parameters.scratch-alias>>
+    - sfdx/scratch-delete:
+        scratch-alias: <<parameters.scratch-alias>>
+orbs:
+  sfdx: circleci/salesforce-sfdx@dev:alpha
+version: 2.1
+

@@ -97,10 +97,10 @@ workflows:
       # e.g. [semver:patch] will cause a patch version to be published.
       - orb-tools/dev-promote-prod-from-commit-subject:
           orb-name: circleci/salesforce-apex
-
-          add-pr-comment: false
-          fail-if-semver-not-indicated: false
-          publish-version-tag: false
+          context: orb-publishing
+          add-pr-comment: true
+          fail-if-semver-not-indicated: true
+          publish-version-tag: true
           requires:
             - integration-test_setup
             - integration-test_full

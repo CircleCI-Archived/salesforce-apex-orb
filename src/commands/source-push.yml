@@ -1,6 +1,6 @@
-# Push source to scratch org.
+# Push source to scratch org and set up mock data & permissions.
 description: >
-  'Push application source to a scratch org.'
+  'Push source to scratch org and set up mock data & permissions.'
 parameters:
   scratch-alias:
     description: 'The name of the scratch Org, can either be the alias or target username.'
