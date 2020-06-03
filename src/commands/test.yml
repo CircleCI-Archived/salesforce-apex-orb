@@ -13,7 +13,7 @@ parameters:
   wait-time:
     description: "Amount of time to wait for this to complete."
     type: integer
-    default: 10
+    default: -1
 
 steps:
   - run:
