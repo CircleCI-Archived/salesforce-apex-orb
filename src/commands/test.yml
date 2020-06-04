@@ -11,7 +11,7 @@ parameters:
     type: string
     default: 'junit'
   wait-time:
-    description: "Amount of time to wait for this to complete."
+    description: "Maximum amount of time to complete tests."
     type: integer
     default: 10
 

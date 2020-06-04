@@ -19,7 +19,7 @@ parameters:
     type: boolean
     default: false
   wait-time:
-    description: "Amount of time to wait for this to complete."
+    description: "Maximum amount of time to complete deployment."
     type: integer
     default: -1
 

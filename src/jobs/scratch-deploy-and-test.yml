@@ -44,6 +44,15 @@ parameters:
     description: The API version for a specific project or all projects. Normally, the Salesforce CLI assumes that you’re using the same version of the CLI as the Dev Hub org.
     default: ''
     type: string
+  mdapi-wait-time:
+    description: "Maximum amount of time to complete mdapi deployment."
+    type: integer
+    default: -1
+  test-wait-time:
+    description: "Maximum amount of time to complete tests."
+    type: integer
+    default: 10
+
 steps:
   - checkout
   - sfdx/install:
@@ -69,9 +78,11 @@ steps:
   - mdapi-deploy:
       scratch-alias: <<parameters.scratch-alias>>
       deploy-dir: <<parameters.deploydir>>
+      wait-time: <<parameters.mdapi-wait-time>>
   - sfdx/scratch-open:
       scratch-alias: <<parameters.scratch-alias>>
   - test:
       scratch-alias: <<parameters.scratch-alias>>
+      wait-time: <<parameters.test-wait-time>>
   - sfdx/scratch-delete:
       scratch-alias: <<parameters.scratch-alias>>
