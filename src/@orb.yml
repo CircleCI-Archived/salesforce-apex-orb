@@ -9,4 +9,4 @@ display:
 
 orbs:
   # This is temporary while the sfdx Orb is being worked on.
-  sfdx: circleci/salesforce-sfdx@dev:alpha
+  sfdx: circleci/salesforce-sfdx@2.0.0
