@@ -99,8 +99,11 @@ workflows:
           orb-name: circleci/salesforce-apex
           context: orb-publishing
           add-pr-comment: true
+          bot-token-variable: GHI_TOKEN
+          bot-user: cpe-bot
           fail-if-semver-not-indicated: true
           publish-version-tag: true
+          ssh-fingerprints: c1:2d:25:9b:b2:ca:1e:54:c1:ce:da:34:bb:25:ae:02
           requires:
             - integration-test_setup
             - integration-test_full

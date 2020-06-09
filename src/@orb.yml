@@ -4,7 +4,8 @@ description: >
   Test and deploy APEX applications to Salesforce.
 
 display:
-  source_url: "https://developer.salesforce.com"
+  home_url: "https://developer.salesforce.com"
+  source_url: "https://github.com/CircleCI-Public/salesforce-apex-orb"
 
 orbs:
   # This is temporary while the sfdx Orb is being worked on.
