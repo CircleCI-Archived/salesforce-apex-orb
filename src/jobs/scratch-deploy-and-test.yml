@@ -1,6 +1,6 @@
 description: >
   An opinionated automation job for deploying your salesforce application to a scratch organization, executing apex unit testing, and finally removing the scratch org. Check this job's source for the full list of commands ran.
-executor: default
+executor: sfdx/default
 parameters:
   cli-version:
     description: 'By default, the latest version of the standalone CLI will be installed. To install via npm, supply a version tag such as "latest" or "6".'
@@ -44,18 +44,27 @@ parameters:
     description: The API version for a specific project or all projects. Normally, the Salesforce CLI assumes that you’re using the same version of the CLI as the Dev Hub org.
     default: ''
     type: string
+  mdapi-wait-time:
+    description: "Maximum amount of time to complete mdapi deployment."
+    type: integer
+    default: -1
+  test-wait-time:
+    description: "Maximum amount of time to complete tests."
+    type: integer
+    default: 10
+
 steps:
   - checkout
-  - sfdx-cli/install:
+  - sfdx/install:
       version: <<parameters.cli-version>>
-  - sfdx-cli/auth:
+  - sfdx/auth:
       apiVersion: <<parameters.apiVersion>>
       instanceUrl: <<parameters.instanceUrl>>
       consumerKey: <<parameters.consumerKey>>
       jwtKey: <<parameters.jwtKey>>
       defaultdevhubusername: <<parameters.defaultdevhubusername>>
       defaultusername: <<parameters.defaultusername>>
-  - sfdx-cli/scratch-create:
+  - sfdx/scratch-create:
       scratch-config: <<parameters.scratch-def>>
       scratch-alias: <<parameters.scratch-alias>>
   - source-push:
@@ -69,9 +78,11 @@ steps:
   - mdapi-deploy:
       scratch-alias: <<parameters.scratch-alias>>
       deploy-dir: <<parameters.deploydir>>
-  - sfdx-cli/scratch-open:
+      wait-time: <<parameters.mdapi-wait-time>>
+  - sfdx/scratch-open:
       scratch-alias: <<parameters.scratch-alias>>
-  - apex-test:
+  - test:
       scratch-alias: <<parameters.scratch-alias>>
-  - sfdx-cli/scratch-delete:
+      wait-time: <<parameters.test-wait-time>>
+  - sfdx/scratch-delete:
       scratch-alias: <<parameters.scratch-alias>>

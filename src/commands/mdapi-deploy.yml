@@ -18,6 +18,10 @@ parameters:
     description: "Validate deploy, but don't save to org."
     type: boolean
     default: false
+  wait-time:
+    description: "Maximum amount of time to complete deployment."
+    type: integer
+    default: -1
 
 steps:
   - run:
@@ -26,3 +30,4 @@ steps:
         <<#parameters.deploy-dir>> --deploydir <<parameters.deploy-dir>> <</parameters.deploy-dir>>
         <<#parameters.deploy-zip>> --zipfile <<parameters.deploy-zip>> <</parameters.deploy-zip>>
         <<#parameters.checkonly>> --checkonly <</parameters.checkonly>>
+        -w << parameters.wait-time >>

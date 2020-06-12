@@ -6,7 +6,7 @@ usage:
     apex: circleci/salesforce-apex@x.y
 
   workflows:
-    basic-test:
+    deploy_test:
       jobs:
         - apex/scratch-deploy-and-test:
             scratch-alias: "circleci"

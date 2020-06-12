@@ -1,0 +1,19 @@
+description: >
+  Example showing how to set up the CLI and authenticate with SFDC with the Apex Orb.
+usage:
+  version: 2.1
+  orbs:
+    apex: circleci/salesforce-apex@x.y
+
+  jobs:
+    install_autheticate:
+      docker:
+        - image: cimg/node:12.6
+      steps:
+        - apex/setup:
+            defaultusername: "sample@email.com"
+
+  workflows:
+    basic_test:
+      jobs:
+        - install_authenticate

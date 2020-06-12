@@ -1,0 +1,17 @@
+# Install CLI and autheticate with SFDC using CLI orb.
+description: >
+  'Install CLI and autheticate with SFDC using CLI orb.'
+parameters:
+  version:
+    type: string
+    default: ''
+    description: 'CLI version to install. Leave blank for latest.'
+  defaultusername:
+    type: string
+    description: 'Username for an organization that all commands will run against.'
+
+steps:
+  - sfdx/install:
+      version: <<parameters.version>>
+  - sfdx/auth:
+      defaultusername: <<parameters.defaultusername>>

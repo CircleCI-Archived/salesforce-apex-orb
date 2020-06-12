@@ -1,6 +1,6 @@
-# Push source to scratch org.
+# Push source to scratch org and set up mock data & permissions.
 description: >
-  'Push application source to a scratch org.'
+  'Push source to scratch org and set up mock data & permissions.'
 parameters:
   scratch-alias:
     description: 'The name of the scratch Org, can either be the alias or target username.'
@@ -9,10 +9,32 @@ parameters:
   force:
     description: 'Force overwriting scratch org and deploy even if warnings are present.'
     type: boolean
+    default: false
+  permset:
+    description: 'Permissions set to assign to the user for the organization.'
+    type: string
+    default: ''
+  sample-data:
+    description: 'Path to sample data for the organization.'
+    type: string
+    default: ''
 
 steps:
   - run:
       name: Push App To Scratch Org
-      command: sfdx force:source:push 
-        <<# parameters.scratch-alias >> -u << parameters.scratch-alias >> 
+      command: sfdx force:source:push
+        <<# parameters.scratch-alias >> -u << parameters.scratch-alias >>
         <</ parameters.scratch-alias >> <<# parameters.force >> --forceoverwrite --ignorewarnings <</ parameters.force >>
+  - when:
+      condition: << parameters.permset >>
+      steps:
+        - run:
+            name: Assign << parameters.permset >> permset for organization
+            command: sfdx force:user:permset:assign -n << parameters.permset >> -u <<parameters.scratch-alias>>
+
+  - when:
+      condition: << parameters.sample-data >>
+      steps:
+        - run:
+            name: Import sample data plan from << parameters.sample-data >>
+            command: sfdx force:data:tree:import --plan << parameters.sample-data >> -u <<parameters.scratch-alias>>

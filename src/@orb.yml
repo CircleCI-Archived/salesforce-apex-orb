@@ -3,10 +3,10 @@ version: 2.1
 description: >
   Test and deploy APEX applications to Salesforce.
 
-# This information will be displayed in the orb registry and is not mandatory.
 display:
-  home_url: "https://www.website.com/docs"
-  source_url: "https://www.github.com/EXAMPLE_ORG/EXAMPLE_PROJECT"
+  home_url: "https://developer.salesforce.com"
+  source_url: "https://github.com/CircleCI-Public/salesforce-apex-orb"
 
 orbs:
-  sfdx-cli: circleci/salesforce-sfdx@1.0.0
+  # This is temporary while the sfdx Orb is being worked on.
+  sfdx: circleci/salesforce-sfdx@2.0.0

@@ -10,9 +10,15 @@ parameters:
     description: 'Format results should be returned as - defaults to junit, can be one of human, tap, junit or json.'
     type: string
     default: 'junit'
+  wait-time:
+    description: "Maximum amount of time to complete tests."
+    type: integer
+    default: 10
 
 steps:
   - run:
+      environment:
+        SFDX_IMPROVED_CODE_COVERAGE: true
       name: Run Unit Tests
-      command: sfdx force:apex:test:run --wait 10 --resultformat << parameters.result-format >> --codecoverage --testlevel RunLocalTests
+      command: sfdx force:apex:test:run --wait << parameters.wait-time >> --resultformat << parameters.result-format >> --codecoverage --testlevel RunLocalTests
         <<# parameters.scratch-alias >> -u << parameters.scratch-alias >> <</ parameters.scratch-alias >>
