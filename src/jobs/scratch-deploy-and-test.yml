@@ -35,7 +35,6 @@ parameters:
 
 steps:
   - checkout
-  - sfdx/install:
   - setup:
       version: <<parameters.cli-version>>
       defaultusername: <<parameters.defaultusername>>
