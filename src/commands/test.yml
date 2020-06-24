@@ -1,6 +1,7 @@
 # Test an APEX application.
 description: >
-  'Run tests for an APEX application.'
+  Run unit tests for an APEX application with improved code coverage. Automatically
+  stores the test results under the "Artifacts" and "Test Results" tabs.
 parameters:
   scratch-alias:
     description: 'The alias of the scratch Org.'
@@ -14,11 +15,24 @@ parameters:
     description: "Maximum amount of time to complete tests."
     type: integer
     default: 10
+  test-result-output:
+    description: "Directory to save test results to."
+    type: string
+    default: '/tmp/apex-test-results'
 
 steps:
   - run:
       environment:
         SFDX_IMPROVED_CODE_COVERAGE: true
       name: Run Unit Tests
-      command: sfdx force:apex:test:run --wait << parameters.wait-time >> --resultformat << parameters.result-format >> --codecoverage --testlevel RunLocalTests
+      command: |
+        mkdir -p << parameters.test-result-output >>
+        sfdx force:apex:test:run --wait << parameters.wait-time >> --resultformat << parameters.result-format >> --codecoverage --testlevel RunLocalTests \
+        -d << parameters.test-result-output >> \
         <<# parameters.scratch-alias >> -u << parameters.scratch-alias >> <</ parameters.scratch-alias >>
+
+  - store_artifacts:
+      path: << parameters.test-result-output >>
+      destination: apex-test-results
+  - store_test_results:
+      path: << parameters.test-result-output >>

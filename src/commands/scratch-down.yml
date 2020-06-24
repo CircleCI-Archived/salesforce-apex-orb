@@ -1,6 +1,6 @@
 # Team down scratch org.
 description: >
-  'Tear down a scratch org.'
+  Removes a scratch organization.
 parameters:
   scratch-alias:
     description: 'The alias of the scratch Org.'

@@ -1,6 +1,7 @@
 # Create and open a scratch org.
 description: >
-  'Create and open a scratch org.'
+  Creates a scratch organization and opens it in the default browser (if available).
+  Also provides a link to open the organization in your own browser.
 parameters:
   scratch-config:
     description: 'The scratch JSON definition.'
