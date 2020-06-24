@@ -1,6 +1,7 @@
 # Test an APEX application.
 description: >
-  'Run tests for an APEX application.'
+  Run unit tests for an APEX application with improved code coverage. Automatically
+  stores the test results under the "Artifacts" and "Test Results" tabs.
 parameters:
   scratch-alias:
     description: 'The alias of the scratch Org.'
