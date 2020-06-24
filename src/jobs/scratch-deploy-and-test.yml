@@ -1,6 +1,6 @@
 description: >
   An opinionated automation job for deploying your salesforce application to a scratch organization,
-  executing apex unit testing, and finally removing the scratch org. Check this job's source for the 
+  executing apex unit testing, and finally removing the scratch org. Check this job's source for the
   full list of commands ran.
 executor: sfdx/default
 parameters:
