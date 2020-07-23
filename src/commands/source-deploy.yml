@@ -26,7 +26,7 @@ parameters:
 steps:
   - run:
       name: Deploy Community metadata
-      command: sfdx force:force:deploy <<#parameters.scratch-alias>> -u <<parameters.scratch-alias>> <</parameters.scratch-alias>>
+      command: sfdx force:source:deploy <<#parameters.scratch-alias>> -u <<parameters.scratch-alias>> <</parameters.scratch-alias>>
         <<#parameters.deploy-dir>> --deploydir <<parameters.deploy-dir>> <</parameters.deploy-dir>>
         <<#parameters.deploy-zip>> --zipfile <<parameters.deploy-zip>> <</parameters.deploy-zip>>
         <<#parameters.checkonly>> --checkonly <</parameters.checkonly>>
