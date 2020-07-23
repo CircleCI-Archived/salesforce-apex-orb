@@ -1,6 +1,6 @@
 description: >
   An opinionated automation job for deploying your salesforce application to a scratch organization,
-  executing apex unit testing, and finally removing the scratch org. Check this job"s source for the
+  executing apex unit testing, and finally removing the scratch org. Check this job's source for the
   full list of commands ran.
 executor:
   name: sfdx/default
@@ -11,7 +11,7 @@ parameters:
     type: string
     default: "12.6"
   cli-version:
-    description: "By default, the latest version of the standalone CLI will be installed. To install via npm, supply a version tag such as "latest" or "6"."
+    description: By default, the latest version of the standalone CLI will be installed. To install via npm, supply a version tag such as "latest" or "6".
     default: ""
     type: string
   scratch-alias:
@@ -31,6 +31,10 @@ parameters:
     type: string
     default: ""
   sourcepath:
+    description: "Directory to deploy."
+    type: string
+    default: ""
+  deploy-dir:
     description: "Directory to deploy."
     type: string
     default: ""
@@ -62,10 +66,22 @@ steps:
   - run:
       name: Load Sample Data
       command: sfdx force:data:tree:import --plan <<parameters.sampledata-path>>
-  - mdapi-deploy:
-      scratch-alias: <<parameters.scratch-alias>>
-      sourcepath: <<parameters.sourcepath>>
-      wait-time: <<parameters.source-deploy-wait-time>>
+  - when:
+      condition: << parameters.deploy-dir >>
+      steps:
+        - mdapi-deploy:
+            scratch-alias: <<parameters.scratch-alias>>
+            deploy-dir: <<parameters.deploy-dir>>
+            wait-time: <<parameters.source-deploy-wait-time>>
+  - when:
+      condition:
+        or: [<< parameters.sourcepath >>, << parameters.manifest >>]
+      steps:
+        - source-deploy:
+            scratch-alias: <<parameters.scratch-alias>>
+            sourcepath: <<parameters.sourcepath>>
+            manifest: <<parameters.manifest>>
+            wait-time: <<parameters.source-deploy-wait-time>>
   - test:
       scratch-alias: <<parameters.scratch-alias>>
       wait-time: <<parameters.test-wait-time>>
