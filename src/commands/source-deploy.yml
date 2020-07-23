@@ -21,7 +21,7 @@ parameters:
   wait-time:
     description: "Maximum amount of time to complete deployment."
     type: integer
-    default: -1
+    default: 5
 
 steps:
   - run:
