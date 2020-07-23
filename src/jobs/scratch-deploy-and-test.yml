@@ -35,7 +35,7 @@ parameters:
   source-deploy-wait-time:
     description: "Maximum amount of time to complete source deployment."
     type: integer
-    default: -1
+    default: 5
   test-wait-time:
     description: "Maximum amount of time to complete tests."
     type: integer
@@ -59,7 +59,6 @@ steps:
       command: sfdx force:data:tree:import --plan <<parameters.sampledata-path>>
   - source-deploy:
       scratch-alias: <<parameters.scratch-alias>>
-      deploy-dir: <<parameters.deploydir>>
       wait-time: <<parameters.source-deploy-wait-time>>
   - test:
       scratch-alias: <<parameters.scratch-alias>>
