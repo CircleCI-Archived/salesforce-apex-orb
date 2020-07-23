@@ -29,6 +29,11 @@ parameters:
   manifest:
     description: "File path for manifest file (package.xml) of components to deploy."
     type: string
+    default: ""
+  sourcepath:
+    description: "Directory to deploy."
+    type: string
+    default: ""
   defaultusername:
     description: The username for an org that all commands run against by default.
     type: string
@@ -60,6 +65,7 @@ steps:
   - source-deploy:
       scratch-alias: <<parameters.scratch-alias>>
       manifest: <<parameters.manifest>>
+      sourcepath: <<parameters.sourcepath>>
       wait-time: <<parameters.source-deploy-wait-time>>
   - test:
       scratch-alias: <<parameters.scratch-alias>>

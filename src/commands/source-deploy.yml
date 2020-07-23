@@ -14,7 +14,7 @@ parameters:
     description: "Maximum amount of time to complete deployment."
     type: integer
     default: 5
-  source-path:
+  sourcepath:
     description: "Comma-seperated list of metadata component names."
     type: string
     default: ""
