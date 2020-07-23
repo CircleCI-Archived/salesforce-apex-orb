@@ -39,6 +39,7 @@ jobs:
       - apex/source-deploy:
           scratch-alias: "ebikes"
           manifest: "./mdapiDeploy/unpackaged/package.xml"
+          source-path: "./"
       - apex/test:
           scratch-alias: "ebikes"
       - apex/scratch-down:
