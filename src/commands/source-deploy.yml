@@ -21,7 +21,6 @@ parameters:
   manifest:
     description: "File path for manifest file (package.xml) of components to deploy."
     type: string
-    default: ""
 
 steps:
   - run:
@@ -29,5 +28,5 @@ steps:
       command: sfdx force:source:deploy <<#parameters.scratch-alias>> -u <<parameters.scratch-alias>> <</parameters.scratch-alias>>
         <<#parameters.checkonly>> --checkonly <</parameters.checkonly>>
         <<#parameters.sourcepath>> --sourcepath=<<parameters.sourcepath>> <</parameters.sourcepath>>
-        <<#parameters.manifest>> --manifest=<<parameters.manifest>> <</parameters.manifest>>
+        --manifest=<<parameters.manifest>>
         -w << parameters.wait-time >>

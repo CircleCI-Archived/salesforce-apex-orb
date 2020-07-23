@@ -26,8 +26,8 @@ parameters:
   sampledata-path:
     description: 'Path location to sample data json file. Example: ./data/sample-data-plan.json'
     type: string
-  deploydir:
-    description: 'The root of the directory tree that contains the files to deploy. The root must contain a valid package.xml file describing the entities in the directory structure.'
+  manifest:
+    description: "File path for manifest file (package.xml) of components to deploy."
     type: string
   defaultusername:
     description: The username for an org that all commands run against by default.
@@ -59,6 +59,7 @@ steps:
       command: sfdx force:data:tree:import --plan <<parameters.sampledata-path>>
   - source-deploy:
       scratch-alias: <<parameters.scratch-alias>>
+      manifest: <<parameters.manifest>>
       wait-time: <<parameters.source-deploy-wait-time>>
   - test:
       scratch-alias: <<parameters.scratch-alias>>
