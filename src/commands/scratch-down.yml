@@ -3,7 +3,7 @@ description: >
   Removes a scratch organization.
 parameters:
   scratch-alias:
-    description: 'The alias of the scratch Org.'
+    description: "The alias of the scratch Org."
     type: string
 
 steps:

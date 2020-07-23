@@ -4,13 +4,13 @@ description: >
   stores the test results under the "Artifacts" and "Test Results" tabs.
 parameters:
   scratch-alias:
-    description: 'The alias of the scratch Org.'
+    description: "The alias of the scratch Org."
     type: string
-    default: ''
+    default: ""
   result-format:
-    description: 'Format results should be returned as - defaults to junit, can be one of human, tap, junit or json.'
+    description: "Format results should be returned as - defaults to junit, can be one of human, tap, junit or json."
     type: string
-    default: 'junit'
+    default: "junit"
   wait-time:
     description: "Maximum amount of time to complete tests."
     type: integer
@@ -18,7 +18,7 @@ parameters:
   test-result-output:
     description: "Directory to save test results to."
     type: string
-    default: '/tmp/apex-test-results'
+    default: "/tmp/apex-test-results"
 
 steps:
   - run:

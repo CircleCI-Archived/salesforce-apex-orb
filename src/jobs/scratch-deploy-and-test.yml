@@ -1,6 +1,6 @@
 description: >
   An opinionated automation job for deploying your salesforce application to a scratch organization,
-  executing apex unit testing, and finally removing the scratch org. Check this job's source for the
+  executing apex unit testing, and finally removing the scratch org. Check this job"s source for the
   full list of commands ran.
 executor:
   name: sfdx/default
@@ -11,20 +11,20 @@ parameters:
     type: string
     default: "12.6"
   cli-version:
-    description: 'By default, the latest version of the standalone CLI will be installed. To install via npm, supply a version tag such as "latest" or "6".'
-    default: ''
+    description: "By default, the latest version of the standalone CLI will be installed. To install via npm, supply a version tag such as "latest" or "6"."
+    default: ""
     type: string
   scratch-alias:
     description: Sets an alias for the scratch org to ensure commands are run against the correct org.
     type: string
   scratch-def:
-    description: Full path to scratch org definition json file. Example:'./config/project-scratch-def.json'
+    description: Full path to scratch org definition json file. Example:"./config/project-scratch-def.json"
     type: string
   permset:
-    description: 'Assign a pre-defined permission set to the default user. Learn more: https://help.salesforce.com/articleView?id=perm_sets_create.htm&type=5'
+    description: "Assign a pre-defined permission set to the default user. Learn more: https://help.salesforce.com/articleView?id=perm_sets_create.htm&type=5"
     type: string
   sampledata-path:
-    description: 'Path location to sample data json file. Example: ./data/sample-data-plan.json'
+    description: "Path location to sample data json file. Example: ./data/sample-data-plan.json"
     type: string
   manifest:
     description: "File path for manifest file (package.xml) of components to deploy."
@@ -62,9 +62,8 @@ steps:
   - run:
       name: Load Sample Data
       command: sfdx force:data:tree:import --plan <<parameters.sampledata-path>>
-  - source-deploy:
+  - mdapi-deploy:
       scratch-alias: <<parameters.scratch-alias>>
-      manifest: <<parameters.manifest>>
       sourcepath: <<parameters.sourcepath>>
       wait-time: <<parameters.source-deploy-wait-time>>
   - test:

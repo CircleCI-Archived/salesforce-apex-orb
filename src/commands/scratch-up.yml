@@ -4,15 +4,15 @@ description: >
   Also provides a link to open the organization in your own browser.
 parameters:
   scratch-config:
-    description: 'The scratch JSON definition.'
+    description: "The scratch JSON definition."
     type: string
   scratch-alias:
-    description: 'The alias of the scratch Org.'
+    description: "The alias of the scratch Org."
     type: string
   overrides:
-    description: 'Overrides for scratch organization.'
+    description: "Overrides for scratch organization."
     type: string
-    default: ''
+    default: ""
 
 steps:
   - sfdx/scratch-create:

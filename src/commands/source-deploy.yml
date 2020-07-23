@@ -1,11 +1,11 @@
 # Deploy source.
 description: >
-  'Deploy source data.'
+  Use this command to deploy source (metadata that’s in source format) to an org. To deploy metadata that's in metadata format, see "apex/mdapi-deploy"
 parameters:
   scratch-alias:
-    description: 'The alias of the scratch Org.'
+    description: "The alias of the scratch Org."
     type: string
-    default: ''
+    default: ""
   checkonly:
     description: "Validate deploy, but don't save to org."
     type: boolean

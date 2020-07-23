@@ -3,15 +3,15 @@ description: >
   Install CLI and autheticate with SFDC using CLI orb. This assumes some defaults,
   and requires the SFDX_JWT_KEY and SFDX_CONSUMER_KEY enviornment variables to be
   set to function. If you need more control over authentication with Salesforce,
-  consider using the sfdx Orb's auth command directly.
+  consider using the sfdx Orb"s auth command directly.
 parameters:
   version:
     type: string
-    default: ''
-    description: 'CLI version to install. Leave blank for latest.'
+    default: ""
+    description: "CLI version to install. Leave blank for latest."
   defaultusername:
     type: string
-    description: 'Username for an organization that all commands will run against.'
+    description: "Username for an organization that all commands will run against."
 
 steps:
   - sfdx/install:
