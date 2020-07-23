@@ -32,8 +32,8 @@ parameters:
   defaultusername:
     description: The username for an org that all commands run against by default.
     type: string
-  mdapi-wait-time:
-    description: "Maximum amount of time to complete mdapi deployment."
+  source-deploy-wait-time:
+    description: "Maximum amount of time to complete source deployment."
     type: integer
     default: -1
   test-wait-time:
@@ -57,10 +57,10 @@ steps:
   - run:
       name: Load Sample Data
       command: sfdx force:data:tree:import --plan <<parameters.sampledata-path>>
-  - mdapi-deploy:
+  - source-deploy:
       scratch-alias: <<parameters.scratch-alias>>
       deploy-dir: <<parameters.deploydir>>
-      wait-time: <<parameters.mdapi-wait-time>>
+      wait-time: <<parameters.source-deploy-wait-time>>
   - test:
       scratch-alias: <<parameters.scratch-alias>>
       wait-time: <<parameters.test-wait-time>>

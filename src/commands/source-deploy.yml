@@ -1,6 +1,6 @@
-# Deploy MDAPI data.
+# Deploy source.
 description: >
-  'Deploy MDAPI data.'
+  'Deploy source data.'
 parameters:
   scratch-alias:
     description: 'The alias of the scratch Org.'
@@ -26,7 +26,7 @@ parameters:
 steps:
   - run:
       name: Deploy Community metadata
-      command: sfdx force:mdapi:deploy <<#parameters.scratch-alias>> -u <<parameters.scratch-alias>> <</parameters.scratch-alias>>
+      command: sfdx force:force:deploy <<#parameters.scratch-alias>> -u <<parameters.scratch-alias>> <</parameters.scratch-alias>>
         <<#parameters.deploy-dir>> --deploydir <<parameters.deploy-dir>> <</parameters.deploy-dir>>
         <<#parameters.deploy-zip>> --zipfile <<parameters.deploy-zip>> <</parameters.deploy-zip>>
         <<#parameters.checkonly>> --checkonly <</parameters.checkonly>>
