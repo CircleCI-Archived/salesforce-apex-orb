@@ -38,7 +38,6 @@ jobs:
           permset: "ebikes"
       - apex/source-deploy:
           scratch-alias: "ebikes"
-          manifest: "./mdapiDeploy/unpackaged/package.xml"
           sourcepath: "./"
       - apex/test:
           scratch-alias: "ebikes"
