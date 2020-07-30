@@ -57,7 +57,7 @@ steps:
       defaultusername: <<parameters.defaultusername>>
   - scratch-up:
       scratch-config: <<parameters.scratch-def>>
-      organization-alias: <<parameters.organization-alias>>
+      scratch-alias: <<parameters.organization-alias>>
   - source-push:
       organization-alias: <<parameters.organization-alias>>
   - run:
@@ -86,4 +86,4 @@ steps:
       organization-alias: <<parameters.organization-alias>>
       wait-time: <<parameters.test-wait-time>>
   - scratch-down:
-      organization-alias: <<parameters.organization-alias>>
+      scratch-alias: <<parameters.organization-alias>>
