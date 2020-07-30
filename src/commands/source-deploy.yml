@@ -2,8 +2,8 @@
 description: >
   Use this command to deploy source (metadata that’s in source format) to an org. To deploy metadata that's in metadata format, see "apex/mdapi-deploy"
 parameters:
-  scratch-alias:
-    description: "The alias of the scratch Org."
+  organization-alias:
+    description: "The alias of the org to use."
     type: string
     default: ""
   checkonly:
@@ -26,7 +26,7 @@ parameters:
 steps:
   - run:
       name: Deploy Community metadata
-      command: sfdx force:source:deploy <<#parameters.scratch-alias>> -u <<parameters.scratch-alias>> <</parameters.scratch-alias>>
+      command: sfdx force:source:deploy <<#parameters.organization-alias>> -u <<parameters.organization-alias>> <</parameters.organization-alias>>
         <<#parameters.checkonly>> --checkonly <</parameters.checkonly>>
         <<#parameters.sourcepath>> --sourcepath=<<parameters.sourcepath>> <</parameters.sourcepath>>
         <<#parameters.manifest>> --manifest=<<parameters.manifest>> <</parameters.manifest>>

@@ -14,7 +14,7 @@ parameters:
     description: By default, the latest version of the standalone CLI will be installed. To install via npm, supply a version tag such as "latest" or "6".
     default: ""
     type: string
-  scratch-alias:
+  organization-alias:
     description: Sets an alias for the scratch org to ensure commands are run against the correct org.
     type: string
   scratch-def:
@@ -57,9 +57,9 @@ steps:
       defaultusername: <<parameters.defaultusername>>
   - scratch-up:
       scratch-config: <<parameters.scratch-def>>
-      scratch-alias: <<parameters.scratch-alias>>
+      organization-alias: <<parameters.organization-alias>>
   - source-push:
-      scratch-alias: <<parameters.scratch-alias>>
+      organization-alias: <<parameters.organization-alias>>
   - run:
       name: Assign Permissions
       command: sfdx force:user:permset:assign -n <<parameters.permset>>
@@ -70,7 +70,7 @@ steps:
       condition: << parameters.deploy-dir >>
       steps:
         - mdapi-deploy:
-            scratch-alias: <<parameters.scratch-alias>>
+            organization-alias: <<parameters.organization-alias>>
             deploy-dir: <<parameters.deploy-dir>>
             wait-time: <<parameters.source-deploy-wait-time>>
   - when:
@@ -78,12 +78,12 @@ steps:
         or: [<< parameters.sourcepath >>, << parameters.manifest >>]
       steps:
         - source-deploy:
-            scratch-alias: <<parameters.scratch-alias>>
+            organization-alias: <<parameters.organization-alias>>
             sourcepath: <<parameters.sourcepath>>
             manifest: <<parameters.manifest>>
             wait-time: <<parameters.source-deploy-wait-time>>
   - test:
-      scratch-alias: <<parameters.scratch-alias>>
+      organization-alias: <<parameters.organization-alias>>
       wait-time: <<parameters.test-wait-time>>
   - scratch-down:
-      scratch-alias: <<parameters.scratch-alias>>
+      organization-alias: <<parameters.organization-alias>>

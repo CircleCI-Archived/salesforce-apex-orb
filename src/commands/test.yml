@@ -3,7 +3,7 @@ description: >
   Run unit tests for an APEX application with improved code coverage. Automatically
   stores the test results under the "Artifacts" and "Test Results" tabs.
 parameters:
-  scratch-alias:
+  organization-alias:
     description: "The alias of the scratch Org."
     type: string
     default: ""
@@ -29,7 +29,7 @@ steps:
         mkdir -p << parameters.test-result-output >>
         sfdx force:apex:test:run --wait << parameters.wait-time >> --resultformat << parameters.result-format >> --codecoverage --testlevel RunLocalTests \
         -d << parameters.test-result-output >> \
-        <<# parameters.scratch-alias >> -u << parameters.scratch-alias >> <</ parameters.scratch-alias >>
+        <<# parameters.organization-alias >> -u << parameters.organization-alias >> <</ parameters.organization-alias >>
 
   - store_artifacts:
       path: << parameters.test-result-output >>

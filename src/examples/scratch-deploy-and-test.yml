@@ -9,7 +9,7 @@ usage:
     deploy_test:
       jobs:
         - apex/scratch-deploy-and-test:
-            scratch-alias: "circleci"
+            organization-alias: "circleci"
             scratch-def: "./config/project-scratch-def.json"
             permset: "circleci"
             sampledata-path: "./sampledata"

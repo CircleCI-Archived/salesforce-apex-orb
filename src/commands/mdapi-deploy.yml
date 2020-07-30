@@ -3,8 +3,8 @@ description: >
   Deploys file representations of components into an org by creating or updating the components they represent.
   You can deploy and retrieve up to 10,000 files or 400 MB (39 MB compressed) at one time.
 parameters:
-  scratch-alias:
-    description: "The alias of the scratch Org."
+  organization-alias:
+    description: "The alias of the organization to deploy the data to."
     type: string
     default: ""
   deploy-dir:
@@ -27,7 +27,7 @@ parameters:
 steps:
   - run:
       name: Deploy Community metadata
-      command: sfdx force:mdapi:deploy <<#parameters.scratch-alias>> -u <<parameters.scratch-alias>> <</parameters.scratch-alias>>
+      command: sfdx force:mdapi:deploy <<#parameters.organization-alias>> -u <<parameters.organization-alias>> <</parameters.organization-alias>>
         <<#parameters.deploy-dir>> --deploydir <<parameters.deploy-dir>> <</parameters.deploy-dir>>
         <<#parameters.deploy-zip>> --zipfile <<parameters.deploy-zip>> <</parameters.deploy-zip>>
         <<#parameters.checkonly>> --checkonly <</parameters.checkonly>>
