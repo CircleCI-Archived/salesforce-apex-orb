@@ -1,9 +1,9 @@
 version: 2.1
 
 description: >
-  Test and deploy APEX applications to Salesforce. This is a wrapper around the circleci/salesforce-sfdx
-  Orb which provides sane defaults - It"s recommend to use the sfdx Orb alongside this one if you require
-  more flexibility.
+  Test and deploy APEX applications to Salesforce.
+  This is a wrapper around the circleci/salesforce-sfdx orb which provides commonly used defaults -
+  It's recommend to use the sfdx orb alongside this one if you require more flexibility.
 
 display:
   home_url: "https://developer.salesforce.com"
