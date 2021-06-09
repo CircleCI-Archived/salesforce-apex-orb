@@ -36,9 +36,9 @@ jobs:
           scratch-alias: "ebikes"
           sample-data: "./data/sample-data-plan.json"
           permset: "ebikes"
-      - apex/mdapi-deploy:
-          scratch-alias: "ebikes"
-          deploy-dir: "./mdapiDeploy/unpackaged"
+      # - apex/mdapi-deploy:
+      #     scratch-alias: "ebikes"
+      #     deploy-dir: "./mdapiDeploy/unpackaged"
       - apex/test:
           scratch-alias: "ebikes"
       - apex/scratch-down:
