@@ -6,7 +6,7 @@ usage:
     apex: circleci/salesforce-apex@x.y
 
   jobs:
-    install_autheticate:
+    install_authenticate:
       docker:
         - image: cimg/node:12.6
       steps:
